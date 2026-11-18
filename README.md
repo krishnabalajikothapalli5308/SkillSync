@@ -1,72 +1,118 @@
-# SkillSync — Career & Skill Intelligence Platform
+# SkillSync — AI-Powered Career & Skill Intelligence Platform
 
-Full-stack career intelligence starter: registration/login, job-description analysis, CV skill extraction, learning-roadmap suggestions, per-user history, Redis caching, Docker Compose and CI.
+**Turn job descriptions into your next career move.**
 
-## Run with Docker
+SkillSync is a full-stack career intelligence platform that helps users understand job requirements, evaluate their existing skills, identify skill gaps, and generate personalized learning roadmaps.
 
-Install and start Docker Desktop. In PowerShell, from this project folder:
+Instead of randomly learning technologies, users can make informed decisions about what to learn next based on their target roles.
 
-```powershell
-Copy-Item .env.example .env
+---
+
+## Overview
+
+SkillSync connects a user's existing technical skills with the requirements of their desired job role.
+
+Users can create an account, upload their CV, analyze job descriptions, view matched and missing skills, and generate actionable learning roadmaps.
+
+## Key Features
+
+### 1. User Authentication
+- User registration and login.
+- Password hashing and JWT-based authentication.
+- Protected user-specific resources.
+
+### 2. CV Skill Extraction
+- Upload PDF and DOCX resumes.
+- Extract text and identify technical skills.
+- Use extracted skills directly in job analysis.
+- Process uploaded documents in memory.
+
+### 3. Job Description Analysis
+- Enter job title, company, and job description.
+- Compare job requirements against existing skills.
+- Identify matched skills and missing skills.
+- Calculate a skill-match percentage.
+
+### 4. Personalized Learning Roadmaps
+- Generate learning tasks based on identified skill gaps.
+- Provide learning objectives.
+- Suggest practical projects.
+- Define ways to demonstrate acquired skills.
+
+### 5. Private Analysis History
+- Save job analyses to the user's account.
+- Retrieve previous analyses.
+- Keep user workspaces separate.
+
+### 6. Redis Caching
+- Redis integration for frequently accessed data.
+- Cache-related operations to improve response efficiency.
+- Graceful fallback when Redis is unavailable.
+
+---
+
+## Tech Stack
+
+| Layer | Technologies |
+|---|---|
+| Frontend | React, JavaScript, CSS |
+| Build Tool | Vite |
+| Backend | Python, FastAPI |
+| Database | SQLite, SQLAlchemy |
+| Authentication | JWT, Password Hashing |
+| Caching | Redis |
+| Document Processing | PDF and DOCX parsing |
+| Testing | Pytest, Vitest |
+| Containerization | Docker, Docker Compose |
+| Version Control | Git, GitHub |
+
+---
+
+## System Architecture
+
+```text
+              USER
+               |
+               v
+       React Frontend
+          (Vite)
+               |
+          HTTP Requests
+               |
+               v
+        FastAPI Backend
+               |
+       +-------+--------+
+       |       |        |
+       v       v        v
+  Authentication  Skill   CV Parser
+       |          Engine      |
+       |             |        |
+       +-------------+--------+
+                     |
+             +-------+-------+
+             |               |
+             v               v
+          SQLite           Redis
+         Database          Cache
+             |
+             v
+       Analysis History
+             |
+             v
+      Learning Roadmap
 ```
 
-Edit `.env` and set a long random `JWT_SECRET_KEY`, then run:
+---
 
-```powershell
-docker compose up --build
-```
+## Project Structure
 
-Open frontend http://localhost:5173, API docs http://localhost:8000/docs, health http://localhost:8000/health.
-
-## Run locally without Docker (Windows PowerShell)
-
-Requires Python 3.13+ and Node.js 22+.
-
-Backend terminal:
-
-```powershell
-cd backend
-py -3.13 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python -m uvicorn app.main:app --reload
-```
-
-**Do not run `python app/main.py` or `python main.py`.** The backend uses package-relative imports and must be started with Uvicorn from the `backend` folder. Docker must be installed and running before `docker compose` works.
-
-Frontend in a second terminal:
-
-```powershell
-cd frontend
-npm install
-npm run dev
-```
-
-Redis is optional for local development; the API continues without caching when Redis is unavailable.
-
-## First use
-
-1. Register (password minimum 10 characters), then sign in.
-2. Paste a job description and your current skills; analyze the gap.
-3. Generate a roadmap from missing skills.
-4. Optionally upload a text-based PDF/DOCX CV (max 5 MB). It is processed in memory and not saved.
-
-## API
-
-| Method | Endpoint | Auth | Purpose |
-|---|---|---:|---|
-| GET | `/health` | No | API and Redis status |
-| POST | `/api/auth/register` | No | Register |
-| POST | `/api/auth/login` | No | Obtain JWT |
-| GET | `/api/auth/me` | Yes | Current user |
-| POST | `/api/analyses` | Yes | Analyze job description |
-| GET | `/api/analyses` | Yes | Own analysis history |
-| GET | `/api/analyses/{id}` | Yes | Read own analysis |
-| POST | `/api/cv/skills` | Yes | Extract CV skills |
-| POST | `/api/roadmaps` | Yes | Generate roadmap |
-
-## Security and limitations
-
-Passwords use Argon2 hashing; access tokens are signed JWTs with expiry. Analysis records are scoped to the authenticated user. Redis caching is short-lived and fails open to the database. CV uploads are type/size checked and parsed in memory.
-
-The skill extractor is a keyword baseline, not an LLM. Match score is not a hiring probability. Roadmaps are suggestions. Before public deployment, configure strong secrets and exact CORS origins, and add rate limiting, email verification, password reset, refresh-token rotation, malware scanning, observability, and cloud deployment. Do not claim these are implemented.
+```text
+SkillSync/
+│
+├── backend/
+│   ├── app/
+│   │   ├── auth.py
+│   │   ├── cache.py
+│   │   ├── cv_parser.py
+│   │   ├
