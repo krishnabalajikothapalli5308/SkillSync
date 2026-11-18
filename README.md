@@ -105,8 +105,9 @@ Users can create an account, upload their CV, analyze job descriptions, view mat
 
 ---
 
-Project Structure
+## Project Structure
 
+```text
 SkillSync/
 │
 ├── backend/
@@ -139,112 +140,134 @@ SkillSync/
 ├── .gitignore
 ├── docker-compose.yml
 └── README.md
+```
 
-Getting Started
+---
 
-Prerequisites
+## Getting Started
+
+### Prerequisites
 
 Install the following:
 
-Python 3.13+
-
-Node.js and npm
-
-Git
+- Python 3.13+
+- Node.js and npm
+- Git
 
 Redis and Docker are optional for running the application locally, depending on your configuration.
 
-1. Clone the repository
+### 1. Clone the repository
 
+```bash
 git clone https://github.com/krishnabalajikothapalli5308/SkillSync.git
 cd SkillSync
+```
 
-2. Configure the backend
+### 2. Configure the backend
 
+```bash
 cd backend
 python -m venv venv
+```
 
 Activate the virtual environment on Windows:
 
+```powershell
 .\venv\Scripts\Activate.ps1
+```
 
 Install dependencies:
 
+```bash
 pip install -r requirements.txt
+```
 
-Configure the environment variables using the project's .env.example as a reference. Set a secure JWT secret before using the application beyond local development.
+Configure the environment variables using the project's `.env.example` as a reference. Set a secure JWT secret before using the application beyond local development.
 
 Start the backend:
 
+```bash
 python -m uvicorn app.main:app --reload
+```
 
 Backend API:
 
-http://localhost:8000
+`http://localhost:8000`
 
 Interactive API documentation:
 
-http://localhost:8000/docs
+`http://localhost:8000/docs`
 
 Health check:
 
-http://localhost:8000/health
+`http://localhost:8000/health`
 
-3. Configure the frontend
+### 3. Configure the frontend
 
 Open another terminal:
 
+```bash
 cd frontend
 npm install
 npm run dev
+```
 
 Frontend:
 
-http://localhost:5173
+`http://localhost:5173`
 
-Configure VITE_API_URL if your backend is running at a different address.
+Configure `VITE_API_URL` if your backend is running at a different address.
 
-Testing
+---
+
+## Testing
 
 Run backend tests from the project root:
 
+```bash
 python -m pytest backend/tests -v
+```
 
 Build the frontend:
 
+```bash
 cd frontend
 npm run build
+```
 
-Future Improvements
+---
 
-Semantic skill matching using NLP.
+## Future Improvements
 
-Integration with external job platforms.
+- Semantic skill matching using NLP.
+- Integration with external job platforms.
+- More advanced recommendation algorithms.
+- Learning progress tracking.
+- Cloud deployment and production monitoring.
+- Enhanced analytics and career insights.
 
-More advanced recommendation algorithms.
+---
 
-Learning progress tracking.
-
-Cloud deployment and production monitoring.
-
-Enhanced analytics and career insights.
-
-Why SkillSync?
+## Why SkillSync?
 
 Traditional job searching focuses on whether a candidate matches a job description.
 
 SkillSync takes the next step:
 
-It helps candidates understand what they are missing and how to work towards it.
+**It helps candidates understand what they are missing and how to work towards it.**
 
 The goal is to make career preparation more structured, measurable, and personalized.
 
-Author
+---
 
-Krishna Balaji Kothapalli
+## Author
+
+**Krishna Balaji Kothapalli**
 
 Computer Science Undergraduate | Full-Stack Development | AI/ML
 
-GitHub: krishnabalajikothapalli5308
+- GitHub: [krishnabalajikothapalli5308](https://github.com/krishnabalajikothapalli5308)
 
-SkillSync — Build skills with direction. Move forward with confidence.
+---
+
+*SkillSync — Build skills with direction. Move forward with confidence.*
